@@ -1,0 +1,562 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>helmetNepal- About Us</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* About page specific styles */
+        .about-hero {
+            position: relative;
+            height: 500px;
+            background-image: url('{% static "image/hero.png" %}');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+    
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .story-section, .stats-section, .mission-section, .team-section {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-tag {
+            display: inline-block;
+            background-color:rgb(221, 151, 151);
+            color:  #af2a2a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .divider {
+            width: 80px;
+            height: 3px;
+            background-color:  #af2a2a;
+            margin: 0 auto;
+        }
+        
+        .story-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .timeline-year {
+            flex: 0 0 100px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:rgb(173, 37, 37) ;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-content h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .stat-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color:  #af2a2a;
+            margin-bottom: 10px;
+        }
+        
+        .stat-title {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            color: #f6caca;
+        }
+        
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .mission-values {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        .mission-values li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mission-values i {
+            color:  #af2a2a;
+            margin-right: 10px;
+        }
+        
+        .mission-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .team-image {
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+            background-color: #f6f6f6;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-card:hover .team-image img {
+            transform: scale(1.05);
+        }
+        
+        .default-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 6rem;
+            color: #ccc;
+        }
+        
+        .social-links {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .team-card:hover .social-links {
+            transform: translateY(0);
+        }
+        
+        .social-icon {
+            color: #fff;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color:#D32F2F;
+        }
+        
+        .team-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .team-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .position {
+            color:#D32F2F;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .bio {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            background-color: #f6caca;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta-content h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .cta-content p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color:#D32F2F;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color:rgb(176, 82, 82);;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'image/logo.png' %}" alt="Helmet Pasal Logo" width="80" height="80" >
+        <a href="#" class="logo">HelmetPasal</a>
+        <ul class="navlist">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'products' %}">Products</a></li>
+        </ul>
+        <div class="header-icon">
+            <a href="{% url 'cart' %}"><i class='bx bx-shopping-bag'></i></a>
+            <p style="color: black">Hi, {{ request.user }}</p>
+        </div>
+        <div class="nav-button">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn"><i class='bx bx-log-out'></i> Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn"><i class='bx bx-log-in'></i> Login</a>
+                <a href="{% url 'signup' %}" class="btn"><i class='bx bx-user-plus'></i> Sign Up</a>
+            {% endif %}
+        </div>
+        <div class="nav-menu-btn"></div>
+    </header>
+
+<section class="about-hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content">
+                <h1 class="hero-title">Discover helmet</h1>
+                <p class="hero-subtitle">Because safety isn’t a choice—it’s a commitment every time you ride.</p>
+        </div>
+    </div>
+</section>
+
+<section id="our-story" class="story-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Our Journey</span>
+                <h2 class="section-title">The Helmet Story</h2>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="story-timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">2018</div>
+                <div class="timeline-content">
+                    <h3>Humble Beginnings</h3>
+                        <p>Founded by a team of passionate riders, HelmetNepal began with a mission: to make high-quality helmets accessible to every Nepali motorcyclist.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content">
+                        <h3>First Store Opening</h3>
+                        <p>We opened our first physical store to help customers try, test, and choose the right helmet for their needs.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">2022</div>
+                <div class="timeline-content">
+                        <h3>Safety Recognitions</h3>
+                        <p>Our helmets received recognition for exceeding safety standards and gaining the trust of thousands of riders.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content">
+                    <h3>Nationwide Expansion</h3>
+                        <p>Now shipping across Nepal with plans for international reach, HelmetNepal is becoming the trusted name in rider safety.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.customers }}+</div>
+                <div class="stat-title">Happy Customers</div>
+                <div class="stat-icon"><i class="fas fa-smile"></i></div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.products }}+</div>
+                <div class="stat-title">Quality Products</div>
+                    <div class="stat-icon"><i class="fas fa-pump-soap"></i></div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.years }}+</div>
+                <div class="stat-title">Years in Business</div>
+                <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+            </div>
+            
+            <div class="stat-card">
+                    <div class="stat-number">{{ stats.awards }}+</div>
+                    <div class="stat-title">Safety Awards</div>
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mission-section">
+    <div class="container">
+        <div class="mission-grid">
+            <div class="mission-content">
+                <div class="section-header">
+                    <span class="section-tag">Our Philosophy</span>
+                        <h2 class="section-title">Safety With Purpose</h2>
+                    <div class="divider"></div>
+                </div>
+                    <p>At HelmetNepal, we believe that safety is every rider's right. Our mission is to deliver high-performance helmets that combine protection, comfort, and style—empowering Nepali riders to hit the road with confidence.</p>
+                <ul class="mission-values">
+                        <li><i class="fas fa-check-circle"></i> DOT & ECE certified safety</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced impact protection</li>
+                        <li><i class="fas fa-check-circle"></i> Lightweight & aerodynamic designs</li>
+                        <li><i class="fas fa-check-circle"></i> Accessible safety gear for all</li>
+                </ul>
+            </div>
+            <div class="mission-image">
+                    <img src="{% static 'image/missions.png' %}" alt="Our Mission">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <div class="section-header center">
+            <span class="section-tag">Our Family</span>
+            <h2 class="section-title">Meet The Team</h2>
+            <div class="divider center"></div>
+                <p class="section-subtitle">The talented individuals behind helmet's success</p>
+        </div>
+        
+        <div class="team-grid">
+                {% if team %}
+            {% for member in team %}
+            <div class="team-card">
+                <div class="team-image">
+                            {% if member.image %}
+                    <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                            {% else %}
+                                <div class="default-image">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                            {% endif %}
+                    <div class="social-links">
+                        {% if member.facebook %}
+                        <a href="{{ member.facebook }}" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if member.twitter %}
+                        <a href="{{ member.twitter }}" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if member.instagram %}
+                        <a href="{{ member.instagram }}" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if member.linkedin %}
+                        <a href="{{ member.linkedin }}" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="team-info">
+                    <h3>{{ member.name }}</h3>
+                    <p class="position">{{ member.position }}</p>
+                    <p class="bio">{{ member.bio }}</p>
+                </div>
+            </div>
+            {% endfor %}
+                {% else %}
+                    <!-- Default team member if none exists in database -->
+                 <div class="team-card">
+                        <div class="team-image">
+                            <div class="default-image">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Sarah Johnson</h3>
+                            <p class="position">Founder & CEO</p>
+                            <p class="bio">With over 15 years in the beauty industry, Sarah founded helmet with a vision to make quality skincare accessible to everyone.</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">
+                            <div class="default-image">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>David Chen</h3>
+                            <p class="position">Head of Research</p>
+                            <p class="bio">A chemist with a PhD in dermatological sciences, David leads our product development team to create innovative and effective skincare formulations.</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">
+                            <div class="default-image">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h3>Maya Rodriguez</h3>
+                            <p class="position">Creative Director</p>
+                            <p class="bio">With an eye for aesthetics and a passion for storytelling, Maya brings our brand vision to life through our visual identity and marketing campaigns.</p>
+                        </div>
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+                <h2>Ready to Ride with Confidence</h2>
+                <p>Explore our top-rated helmets and find the perfect match for your riding style and safety needs.</p>
+                <a href="#products" class="cta-button">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="last-text">
+        <p>Copyright © 2025 HelmetNepal. All Rights Reserved</p>
+    </div>
+
+    <script src="{% static 'ecommerce/script.js' %}"></script>
+</body>
+</html>

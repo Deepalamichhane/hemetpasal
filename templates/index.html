@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelmetPasal</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <header>
+        <img src="{% static 'image/logo.png' %}" alt="Helmet Pasal Logo" width="80" height="80" >
+        <a href="#" class="logo">HelmetPasal</a>
+        
+        <ul class="navlist">
+            <li><a href="#home">Home</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'products' %}">Products</a></li>
+        </ul>
+        <div class="header-icon">
+            <a href="{% url 'cart' %}"><i class='bx bx-shopping-helmet'></i></a>
+            <p style="color: black">Hi, {{ request.user }}</p>
+        </div>
+        <div class="nav-button">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn"><i class='bx bx-log-out'></i> Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn"><i class='bx bx-log-in'></i> Login</a>
+                <a href="{% url 'signup' %}" class="btn"><i class='bx bx-user-plus'></i> Sign Up</a>
+            {% endif %}
+        </div>
+        <div class="nav-menu-btn"></div>
+    </header>
+
+    <section class="homes" id="home">
+        <div class="home-text">
+            <h1>“Ride Smart. Ride Safe. Ride with HelmetPasal."</h1>
+            <a href="#featured" class="btn">Explore Helmets</a>
+        </div>
+    </section>
+
+    <section class="featured" id="featured">
+        <div class="center-text">
+            <h2>Top Picks for You</h2>
+        </div>
+        <div class="featured-content">
+            {% for product in featured_products %}
+            <div class="row">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% if product.discount_price %}
+                <span class="discount-badge">{{ product.get_discount_percentage }}% OFF</span>
+                {% endif %}
+                {% else %}
+                <div class="no-image">No Image Available</div>
+                {% endif %}
+                <div class="fea-text">
+                    <h5>{{ product.name }}</h5>
+                    <div class="price-container">
+                        {% if product.discount_price %}
+                            <p class="price">Rs. {{ product.get_discounted_price }}</p>
+                            <p class="original-price">Rs. {{ product.price }}</p>
+                        {% else %}
+                            <p class="price">Rs. {{ product.price }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="arrow">
+                    <a href="{% url 'product_detail' product.id %}"><i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-product">
+                <p>No featured products available.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-text">
+            <h6>LIMITED TIME OFFER</h6>
+            <h4>15% OFF<br> ON ALL HELMETS</h4>
+            <a href="{% url 'products' %}" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="new" id="new">
+        <div class="center-text">
+            <h2>New Arrivals</h2>
+        </div>
+        <div class="new-content">
+            {% for product in new_arrivals %}
+            <div class="box">
+                <a href="{% url 'product_detail' product.id %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% if product.discount_price %}
+                <div class="sale">Sale</div>
+                {% endif %}
+                {% else %}
+                <div class="no-image">No Image Available</div>
+                {% endif %}
+                </a>
+                <div class="product-info">
+                    <h5>{{ product.name }}</h5>
+                    <div class="price-info">
+                        {% if product.discount_price %}
+                            <h6 class="original-price">Rs. {{ product.price }}</h6>
+                            <h6 class="offer-price">Rs. {{ product.get_discounted_price }}</h6>
+                        {% else %}
+                            <h6 class="price">Rs. {{ product.price }}</h6>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-product">
+                <p>No new arrivals available.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="last-text">
+        <p>Copyright © 2025 HelmetPasal. All Rights Reserved</p>
+    </div>
+
+    <script src="{% static 'ecommerce/script.js' %}"></script>
+</body>
+</html>

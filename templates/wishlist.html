@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - helmet</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <style>
+        .wishlist-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .wishlist-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .wishlist-header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .wishlist-item {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .wishlist-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .wishlist-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .wishlist-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .wishlist-item:hover .wishlist-image img {
+            transform: scale(1.05);
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color:rgb(139, 34, 34);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .wishlist-details {
+            padding: 20px;
+        }
+        
+        .wishlist-category {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .wishlist-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .wishlist-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .current-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color:  #af2a2a;
+        }
+        
+        .original-price {
+            font-size: 1rem;
+            color: #888;
+            text-decoration: line-through;
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .add-to-cart-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color:rgb(141, 44, 44);
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color:rgb(176, 88, 88);
+        }
+        
+        .remove-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            color: #555;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .remove-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .view-btn {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: transparent;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .view-btn:hover {
+            background-color: #f9f9f9;
+            border-color: #ccc;
+        }
+        
+        .empty-wishlist {
+            text-align: center;
+            padding: 50px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-wishlist p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .shop-btn {
+            display: inline-block;
+            background-color:rgb(166, 91, 91);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .shop-btn:hover {
+            background-color:rgb(170, 70, 70);
+        }
+        
+        .page-spacing {
+            padding-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'image/logo.png' %}" alt="Helmet Pasal Logo" width="80" height="80" >
+        <a href="#" class="logo">HelmetPasal</a>
+        <ul class="navlist">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'products' %}">Products</a></li>
+        </ul>
+        <div class="header-icon">
+            <a href="{% url 'cart' %}"><i class='bx bx-shopping-bag'></i></a>
+            <p style="color: black">Hi, {{ request.user }}</p>
+        </div>
+        <div class="nav-button">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn"><i class='bx bx-log-out'></i> Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn"><i class='bx bx-log-in'></i> Login</a>
+                <a href="{% url 'signup' %}" class="btn"><i class='bx bx-user-plus'></i> Sign Up</a>
+            {% endif %}
+        </div>
+        <div class="nav-menu-btn"></div>
+    </header>
+
+    <div class="page-spacing"></div>
+
+    <section class="wishlist-container">
+        <div class="wishlist-header">
+            <h1>Your Wishlist</h1>
+            <p>Save items to purchase later</p>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% if wishlist_items %}
+            <div class="wishlist-grid">
+                {% for item in wishlist_items %}
+                    <div class="wishlist-item">
+                        <div class="wishlist-image">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            {% else %}
+                                <img src="{% static 'image/h1.jpg' %}" alt="No image">
+                            {% endif %}
+                            
+                            {% if item.product.discount_price %}
+                                <div class="discount-badge">{{ item.product.get_discount_percentage }}% OFF</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="wishlist-details">
+                            <div class="wishlist-category">{{ item.product.get_category_display }}</div>
+                            <h3 class="wishlist-name">{{ item.product.name }}</h3>
+                            
+                            <div class="wishlist-price">
+                                {% if item.product.discount_price %}
+                                    <span class="current-price">Rs. {{ item.product.get_discounted_price }}</span>
+                                    <span class="original-price">Rs. {{ item.product.price }}</span>
+                                {% else %}
+                                    <span class="current-price">Rs. {{ item.product.price }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="wishlist-actions">
+                                <form action="{% url 'move_to_cart' item.id %}" method="POST" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                                </form>
+                                
+                                <a href="{% url 'remove_from_wishlist' item.id %}" class="remove-btn">
+                                    <i class='bx bx-trash'></i> Remove
+                                </a>
+                            </div>
+                            
+                            <a href="{% url 'product_detail' item.product.id %}" class="view-btn">View Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-wishlist">
+                <p>Your wishlist is empty</p>
+                <a href="{% url 'products' %}" class="shop-btn">Continue Shopping</a>
+            </div>
+        {% endif %}
+    </section>
+
+    <div class="last-text">
+        <p>Copyright © 2025 HelmetPasal. All Rights Reserved</p>
+    </div>
+
+    <script src="{% static 'ecommerce/script.js' %}"></script>
+</body>
+</html> 
